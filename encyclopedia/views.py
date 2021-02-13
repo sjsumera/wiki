@@ -26,3 +26,6 @@ def entry(request, entry):
     else: 
         return render(request, "encyclopedia/missingentry.html", {
         })
+
+def new(request):
+    return render(request, "encyclopedia/new.html" )
