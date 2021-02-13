@@ -1,8 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+"""
+I learned about importing messages and the technique to
+   display an alert on error from here:
+   https://stackoverflow.com/questions/47923952/python-django-how-to-display-error-messages-on-invalid-login 
+""" 
+from django.contrib import messages
 
 from . import util
-
+from . import newpage
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -28,4 +34,24 @@ def entry(request, entry):
         })
 
 def new(request):
-    return render(request, "encyclopedia/new.html" )
+    # Process for data if user is submitting form 
+    if request.method == "POST":
+        form = newpage.NewEntry(request.POST)
+        title = form['title'].value()
+
+        """
+        Check to see if data is valid and that an entry doesn't already exist
+        Switch to lowercase to make case-insensitive and ensure data isn't overwritten. I used a list comprehension to update to lowercase, I learned about that here: https://www.w3schools.com/python/python_lists_comprehension.asp
+        """
+        if form.is_valid() and title.lower() not in [i.lower() for i in util.list_entries()]:
+            # If entry doesn't exist create it and redirect to the new article and
+            # show success message 
+            util.save_entry(title, form['content'].value())
+            messages.success(request, "Entry Created!")
+            return HttpResponseRedirect(f"wiki/{title}")
+        else:     
+            messages.error(request, 'Entry Already Exists!')
+    else:
+        form = newpage.NewEntry()
+
+    return render(request, "encyclopedia/new.html", {"form":form} )
