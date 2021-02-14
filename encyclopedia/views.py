@@ -8,7 +8,7 @@ I learned about importing messages and the technique to
 from django.contrib import messages
 
 from . import util
-from . import newpage
+from . import pages
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -36,7 +36,7 @@ def entry(request, entry):
 def new(request):
     # Process for data if user is submitting form 
     if request.method == "POST":
-        form = newpage.NewEntry(request.POST)
+        form = pages.NewEntry(request.POST)
         title = form['title'].value()
 
         """
@@ -52,7 +52,7 @@ def new(request):
         else:     
             messages.error(request, 'Entry Already Exists!')
     else:
-        form = newpage.NewEntry()
+        form = pages.NewEntry()
 
     return render(request, "encyclopedia/new.html", {"form":form} )
 
