@@ -17,4 +17,12 @@
 
         {{ entrycontent }}
 
+    <form action="{% url 'edit' %}">
+        <input type="hidden" name="title" value="{{ entrytitle }}">
+        <input type="hidden" name="content" value="{{ entrycontent }}">
+        <input type="submit"> 
+    </form>
+    <div class="edit_link">
+        <a href="{% url 'edit' %}"> Edit this entry </a>    
+    </div>
 {% endblock %}

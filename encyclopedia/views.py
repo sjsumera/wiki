@@ -30,8 +30,8 @@ def entry(request, entry):
         return render(request, "encyclopedia/entry.html", {
         "entrytitle": entry, "entrycontent": entrycontent })
     else: 
-        return render(request, "encyclopedia/missingentry.html", {
-        })
+        return render(request, "encyclopedia/missing.html", {
+        })    
 
 def new(request):
     # Process for data if user is submitting form 
@@ -55,3 +55,15 @@ def new(request):
         form = newpage.NewEntry()
 
     return render(request, "encyclopedia/new.html", {"form":form} )
+
+def edit(request):
+    # Get the results passed in from the page where the user clicked "edit"
+    title = request.GET.get('title', None)
+    content = request.GET.get('content', None)
+
+    # Ensure that title and content parameters were passed and that it is
+    # a valid wiki entry 
+    if title and content and title in [i for i in util.list_entries()]:
+        return render(request, "encyclopedia/edit.html", {"title":title, "content":content})
+    else:
+        return render(request, "encyclopedia/missing.html")

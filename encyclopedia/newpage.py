@@ -10,3 +10,8 @@ class NewEntry(forms.Form):
 
     content = forms.CharField(label="Write your article", required=True)
 
+class EditEntry(NewEntry):
+
+    title = forms.CharField(label='Article Name', max_length=50, required=True)
+
+    content = forms.CharField(label="Write your article", required=True)
