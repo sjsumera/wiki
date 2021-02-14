@@ -63,7 +63,8 @@ def edit(request):
 
     # Ensure that title and content parameters were passed and that it is
     # a valid wiki entry 
-    if title and content and title in [i for i in util.list_entries()]:
-        return render(request, "encyclopedia/edit.html", {"title":title, "content":content})
+    if title and content and title.lower() in [i.lower() for i in util.list_entries()]:
+        form = pages.EditEntry(initial={'content':content})
+        return render(request, "encyclopedia/edit.html", {"title":title, "content":content, "form":form})
     else:
         return render(request, "encyclopedia/missing.html")
