@@ -5,17 +5,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Edit This Entry</h1>
+    <h1>Editing the {{ title }} article</h1>
 
- 
-    <form action="/new" method="POST"> 
+    
+    <form action="/edit" method="POST"> 
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit">
     </form>
-    {{ title }}
-    {{ content }}
-
-
 
 {% endblock %}

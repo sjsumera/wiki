@@ -27,8 +27,9 @@ def entry(request, entry):
     """
     
     if entrycontent:
+
         return render(request, "encyclopedia/entry.html", {
-        "entrytitle": entry, "entrycontent": entrycontent })
+        "entrytitle": entry, "entrycontent": entrycontent})
     else: 
         return render(request, "encyclopedia/missing.html", {
         })    
@@ -58,8 +59,8 @@ def new(request):
 
 def edit(request):
     # Get the results passed in from the page where the user clicked "edit"
-    title = request.GET.get('title', None)
-    content = request.GET.get('content', None)
+    title = request.POST.get('title', None)
+    content = util.get_entry(title)
 
     # Ensure that title and content parameters were passed and that it is
     # a valid wiki entry 

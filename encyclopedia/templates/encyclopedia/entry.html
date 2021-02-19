@@ -17,12 +17,9 @@
 
         {{ entrycontent }}
 
-    <form action="{% url 'edit' %}">
+    <form action="{% url 'edit' %}" method="POST">
+        {% csrf_token %}
         <input type="hidden" name="title" value="{{ entrytitle }}">
-        <input type="hidden" name="content" value="{{ entrycontent }}">
-        <input type="submit"> 
+        <input type="submit" value="Edit Page"> 
     </form>
-    <div class="edit_link">
-        <a href="{% url 'edit' %}"> Edit this entry </a>    
-    </div>
 {% endblock %}
