@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import markdown2
+from random import randint
 
 """
 I learned about importing messages and the technique to
@@ -94,8 +95,9 @@ def search(request):
     query = request.GET.get('q')
     entries = util.list_entries()
 
-    # Check to see if the query is an exact match for an entry
+    
     """
+        Check to see if the query is an exact match for an entry
         Citing this article for where I found the "Find" function
         https://stackabuse.com/python-check-if-string-contains-substring/
     """ 
@@ -115,3 +117,10 @@ def search(request):
         else:
             return render(request, "encyclopedia/missing.html")
                 
+def random(request):
+    # Get a random int between 0 and total number of entries
+    entries = util.list_entries()
+    index = randint(0, len(entries))
+
+    # Redirect on click to the random index of entries 
+    return HttpResponseRedirect(f"wiki/{entries[index]}")
