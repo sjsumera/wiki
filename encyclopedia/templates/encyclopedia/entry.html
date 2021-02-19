@@ -19,6 +19,7 @@
 
     <form action="{% url 'edit' %}" method="POST">
         {% csrf_token %}
+        <input type="hidden" name="content" value="{{ entrycontent }}">
         <input type="hidden" name="title" value="{{ entrytitle }}">
         <input type="submit" value="Edit Page"> 
     </form>

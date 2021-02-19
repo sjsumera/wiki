@@ -65,7 +65,23 @@ def edit(request):
     # Ensure that title and content parameters were passed and that it is
     # a valid wiki entry 
     if title and content and title.lower() in [i.lower() for i in util.list_entries()]:
-        form = pages.EditEntry(initial={'content':content})
+        form = pages.EditEntry(initial={'content':content, 'title':title})
+
         return render(request, "encyclopedia/edit.html", {"title":title, "content":content, "form":form})
+
     else:
+        return render(request, "encyclopedia/missing.html")
+
+def saveedit(request):
+    # Check if the form to edit was submitted 
+    if request.method == "POST":
+        # If so, collect the data from the form, save, then redirect
+        title = request.POST.get('title', None)
+        content = request.POST.get('content', None)
+  
+        util.save_entry(title, content)
+        messages.success(request, "Entry Updated!")
+        return HttpResponseRedirect(f"wiki/{title}")
+    # If not submitting via post, just display the missing entry page 
+    else: 
         return render(request, "encyclopedia/missing.html")

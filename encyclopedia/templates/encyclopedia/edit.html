@@ -8,9 +8,10 @@
     <h1>Editing the {{ title }} article</h1>
 
     
-    <form action="/edit" method="POST"> 
+    <form action="/saveedit" method="POST"> 
         {% csrf_token %}
-        {{ form }}
+        {{ form.title.as_hidden }}
+        {{ form.content }}
         <input type="submit" value="Submit">
     </form>
 

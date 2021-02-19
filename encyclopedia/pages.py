@@ -6,6 +6,8 @@ from django import forms
 # Create form to edit existing entry 
 class EditEntry(forms.Form):
 
+    title = forms.CharField(label='Article Title', max_length=50, required=True)
+
     # Only provide textarea when editing 
     content = forms.CharField(widget=forms.Textarea, label="Edit this article", required=True)
 
