@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+
 """
 I learned about importing messages and the technique to
    display an alert on error from here:
@@ -85,3 +86,28 @@ def saveedit(request):
     # If not submitting via post, just display the missing entry page 
     else: 
         return render(request, "encyclopedia/missing.html")
+
+def search(request):
+    # Get the results of the query and store all our entries in a variable
+    query = request.GET.get('q')
+    entries = util.list_entries()
+
+    # Check to see if the query is an exact match for an entry
+    """
+        Citing this article for where I found the "Find" function
+        https://stackabuse.com/python-check-if-string-contains-substring/
+    """ 
+    if query.lower() in [i.lower() for i in entries]:
+        return HttpResponseRedirect(f"wiki/{query}")
+    # If not, let's see if it's a partial match    
+    else:
+        fuzzy_results = []
+        for entry in entries:
+            if entry.lower().find(query.lower()) != -1:
+                fuzzy_results.append(entry)
+        if fuzzy_results:
+            fuzzy_results.sort()
+            return render(request, "encyclopedia/search.html", {"fuzzy_results": fuzzy_results})
+        else:
+            return render(request, "encyclopedia/missing.html")
+                
