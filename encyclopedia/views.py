@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+import markdown2
 
 """
 I learned about importing messages and the technique to
@@ -20,7 +21,8 @@ def index(request):
 def entry(request, entry):
 
     # Get entry content using the get_entry function 
-    entrycontent = util.get_entry(entry)
+    # Citing using "safe" in my template: https://docs.djangoproject.com/en/dev/ref/templates/builtins/#safe
+    entrycontent = markdown2.markdown(util.get_entry(entry))
 
     """
      Determine if there is any content to render, if so, do it
@@ -105,9 +107,11 @@ def search(request):
         for entry in entries:
             if entry.lower().find(query.lower()) != -1:
                 fuzzy_results.append(entry)
+        # If there's something in the list, render the results         
         if fuzzy_results:
             fuzzy_results.sort()
             return render(request, "encyclopedia/search.html", {"fuzzy_results": fuzzy_results})
+        # If not, display empty page     
         else:
             return render(request, "encyclopedia/missing.html")
                 
