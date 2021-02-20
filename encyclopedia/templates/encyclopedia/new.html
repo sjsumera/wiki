@@ -14,9 +14,17 @@
         </div>
     {% endfor %}    
 
-    <form action="/new" method="POST"> 
+    <form action="/newsubmit" method="POST"> 
         {% csrf_token %}
-        {{ form }}
+
+        Article Title:
+        <div>
+            {{ form.title }}
+        </div>
+        Article Content:
+        <div>
+            {{ form.content }}
+        </div>
         <input type="submit" value="Submit">
     </form>
 

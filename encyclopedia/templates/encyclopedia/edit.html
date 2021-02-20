@@ -6,13 +6,15 @@
 
 {% block body %}
     <h1>Editing the {{ title }} article</h1>
-
     
-    <form action="/saveedit" method="POST"> 
-        {% csrf_token %}
-        {{ form.title.as_hidden }}
-        {{ form.content }}
-        <input type="submit" value="Submit">
-    </form>
-
+    <div>
+        <form action="/saveedit" method="POST"> 
+            {% csrf_token %}
+            {{ form.title.as_hidden }}
+            <div>
+                {{ form.content }}
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 {% endblock %}
