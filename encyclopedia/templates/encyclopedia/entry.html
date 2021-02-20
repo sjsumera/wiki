@@ -1,22 +1,16 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Encyclopedia
+    {{ entrytitle }}
 {% endblock %}
 
 {% block body %}
     {% for message in messages %}
-
         <div class="alert alert-success">
             {{ message }}
         </div>
-        
-    {% endfor %}    
-
-    <h1 style="text-decoration: underline;">{{ entrytitle }}</h1>
-
-        {{ entrycontent|safe }}
-
+    {% endfor %}
+    {{ entrycontent|safe }}
     <form action="{% url 'edit' %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="content" value="{{ entrycontent }}">

@@ -1,22 +1,18 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Encyclopedia
+    New Article
 {% endblock %}
 
 {% block body %}
     <h1>Create a New Entry</h1>
-
     {% for message in messages %}
-
         <div class="alert alert-danger">
             {{ message }}
         </div>
     {% endfor %}    
-
     <form action="/newsubmit" method="POST"> 
         {% csrf_token %}
-
         Article Title:
         <div>
             {{ form.title }}
@@ -27,5 +23,4 @@
         </div>
         <input type="submit" value="Submit">
     </form>
-
 {% endblock %}

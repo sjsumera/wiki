@@ -142,7 +142,7 @@ def random(request):
     index number when redirecting the user.
     """
     entries = util.list_entries()
-    index = randint(0, len(entries))
+    index = randint(0, (len(entries) - 1))
 
     return HttpResponseRedirect(f"wiki/{entries[index]}")
 
