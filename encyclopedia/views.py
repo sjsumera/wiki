@@ -34,7 +34,7 @@ def entry(request, entry):
         return render(request, "encyclopedia/entry.html",
                       {"entrytitle": entry, "entrycontent": entrycontent})
     else:
-        return render(request, "encyclopedia/missing.html")
+        return HttpResponseRedirect("../missing")
 
 
 def new(request):
@@ -88,7 +88,7 @@ def edit(request):
         return render(request, "encyclopedia/edit.html",
                       {"title": title, "content": content, "form": form})
     else:
-        return render(request, "encyclopedia/missing.html")
+        return HttpResponseRedirect("missing")
 
 
 def saveedit(request):
@@ -132,7 +132,7 @@ def search(request):
                           {"fuzzy_results": fuzzy_results})
         # If not, display empty page
         else:
-            return render(request, "encyclopedia/missing.html")
+            return HttpResponseRedirect("missing")
 
 
 def random(request):
@@ -145,3 +145,19 @@ def random(request):
     index = randint(0, len(entries))
 
     return HttpResponseRedirect(f"wiki/{entries[index]}")
+
+
+def missing(request):
+    """
+    If page isn't valid, redirect the user to the missing content page
+    """
+    return render(request, "encyclopedia/missing.html")
+
+
+def error_404(request, exception):
+    """
+    Custom 404 page for the site. The missing template is general enough
+    for this so just using the same missing.html template.
+    Citing: https://www.geeksforgeeks.org/built-in-error-views-in-django/
+    """
+    return render(request, "encyclopedia/missing.html")

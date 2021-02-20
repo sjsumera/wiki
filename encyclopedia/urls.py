@@ -1,5 +1,4 @@
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
@@ -10,5 +9,6 @@ urlpatterns = [
     path("edit", views.edit, name="edit"),
     path("saveedit", views.saveedit, name="saveedit"),
     path("search", views.search, name="search"),
-    path("random", views.random, name="random")
+    path("random", views.random, name="random"),
+    path("missing", views.missing, name="missing")
 ]
